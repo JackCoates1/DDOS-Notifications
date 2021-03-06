@@ -1,0 +1,17 @@
+Webhook requirements
+
+# Ubuntu 20.04 LTS Dependencies
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install python3-pip screen tcpdump -y
+pip3 install discord-webhook
+
+# Ubuntu 18.04 LTS Dependencies
+sudo apt install python-pip tcpdump screen -y
+pip install discord-webhook
+sudo chmod 755 dump.sh && chmod +x dump.sh
+
+
+# Steps
+1. Upload the files...
+2. sudo chmod 755 dump.sh && chmod +x dump.sh
+3. sudo screen ./dump.sh
