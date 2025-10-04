@@ -1,0 +1,33 @@
+<!-- banner.svg — 1200 x 400, professional security-style banner -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="DDOS-Notifications banner">
+  <rect width="1200" height="400" fill="#1e1e1e"></rect>
+  <defs>
+    <linearGradient id="shieldGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#2b2b2b"></stop>
+      <stop offset="1" stop-color="#151515"></stop>
+    </linearGradient>
+
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.35"></feDropShadow>
+    </filter>
+  </defs>
+
+  <!-- Icon (shield) -->
+  <g transform="translate(140,100)" filter="url(#softShadow)">
+    <!-- outer shield -->
+    <path d="M80 0 L140 30 L140 120 C140 190 80 230 80 230 C80 230 20 190 20 120 L20 30 Z" fill="url(#shieldGrad)" stroke="#ffffff" stroke-opacity="0.06" stroke-width="3"></path>
+    <!-- inner accent -->
+    <path d="M80 30 L110 52 L80 82 L50 52 Z" fill="#ffffff" opacity="0.06"></path>
+    <!-- small shield core line -->
+    <path d="M80 52 L80 150" stroke="#ffffff" stroke-opacity="0.06" stroke-width="2" stroke-linecap="round"></path>
+  </g>
+
+  <!-- Title -->
+  <text x="320" y="150" fill="#ffffff" font-family="Inter, Arial, Helvetica, sans-serif" font-size="64" font-weight="700" letter-spacing="0.5">DDOS-Notifications</text>
+
+  <!-- Tagline -->
+  <text x="320" y="200" fill="#bfbfbf" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="500">Real-Time DDoS Detection &amp; Notifications</text>
+
+  <!-- subtle divider -->
+  <rect x="320" y="220" width="520" height="1" fill="#2b2b2b" opacity="0.6"></rect>
+</svg>
