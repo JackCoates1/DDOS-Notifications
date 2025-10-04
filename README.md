@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/shexty/DDOS-Notifications/main/Banner.svg" alt="DDOS-Notifications Banner" width="100%">
+  <img src="banner.png" alt="DDOS-Notifications Banner" width="100%">
 </p>
 
 <div align="center">
 
 # 🚨 DDOS-Notifications  
-**Lightweight & Fast DDoS Alerting via Webhooks**
+**Real-Time DDoS Detection & Notifications**
 
-![GitHub Repo stars](https://img.shields.io/github/stars/shexty/DDOS-Notifications?style=flat&color=yellow) 
-![GitHub forks](https://img.shields.io/github/forks/shexty/DDOS-Notifications?style=flat&color=blue) 
-![GitHub issues](https://img.shields.io/github/issues/shexty/DDOS-Notifications?style=flat&color=orange)
+![Stars](https://img.shields.io/github/stars/shexty/DDOS-Notifications?style=flat&color=yellow)
+![Forks](https://img.shields.io/github/forks/shexty/DDOS-Notifications?style=flat&color=blue)
+![Issues](https://img.shields.io/github/issues/shexty/DDOS-Notifications?style=flat&color=orange)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Made with Python](https://img.shields.io/badge/made%20with-Python-blue?logo=python)
+![Python](https://img.shields.io/badge/made%20with-Python-blue?logo=python)
 
 </div>
 
@@ -19,22 +19,18 @@
 
 ## 🧠 Overview
 
-**DDOS-Notifications** is a simple, efficient tool designed to **detect suspicious traffic spikes** and **send real-time alerts** via webhooks (e.g., Discord, Slack, MS Teams).
-
-✅ **Lightweight** – Bash + Python, no heavy frameworks  
-✅ **Fast** – Detect & notify within seconds  
-✅ **Customizable** – Set your own thresholds and webhook targets  
-✅ **Extensible** – Integrate with any monitoring setup
+**DDOS-Notifications** is a lightweight, fast tool to **detect suspicious traffic spikes** and send **real-time alerts** via webhooks (e.g. Discord, Slack, Teams).  
+Ideal for security admins, small networks, or anyone wanting a quick DDoS alerting setup — without heavy monitoring frameworks.
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 DDOS-Notifications/
-├── dump.sh # Bash script to collect network or log data
-├── webhook.py # Python script to evaluate and send alerts
-├── setup.txt # Setup & configuration notes
-└── README.md # This file
+├── dump.sh # Bash script to collect network/log data
+├── webhook.py # Python script to check & send alerts
+├── setup.txt # Optional setup notes
+└── README.md
 
 yaml
 Copy code
@@ -45,31 +41,28 @@ Copy code
 
 - Python 3.x  
 - [`requests`](https://pypi.org/project/requests/) library  
-- A shell environment (Linux / macOS)  
-- A valid **webhook URL** (Discord, Slack, etc.)  
-- Network log or metric access (e.g., netstat, iptables, interface counters)
+- A webhook URL (Discord, Slack, etc.)  
+- Bash / shell environment (Linux, macOS)
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Installation (Quick)
 
 ```bash
-# 1️⃣ Clone the repository
+# 1. Clone the repository
 git clone https://github.com/shexty/DDOS-Notifications.git
 cd DDOS-Notifications
 
-# 2️⃣ Install dependencies
+# 2. Install Python dependency
 pip install requests
+✅ That’s it — no extra config files or frameworks.
 
-# 3️⃣ Make scripts executable (if needed)
-chmod +x dump.sh
 ⚙️ Configuration
-You can configure the tool using environment variables or by editing the scripts directly.
+Set your webhook URL and optional threshold using environment variables:
 
-Example: Environment Variables
 bash
 Copy code
-export WEBHOOK_URL="https://your-discord-or-slack-webhook-url"
+export WEBHOOK_URL="https://your-webhook-url"
 export PACKET_THRESHOLD=100000
 Inside webhook.py:
 
@@ -85,15 +78,11 @@ bash
 Copy code
 ./dump.sh > stats.log
 python webhook.py stats.log
-Continuous Monitoring (via Cron)
+Continuous Monitoring (Cron Example)
 cron
 Copy code
-* * * * * /path/to/DDOS-Notifications/dump.sh | python /path/to/DDOS-Notifications/webhook.py
-Whenever traffic exceeds your threshold, an alert is automatically sent to your webhook channel.
-Here’s an example Discord alert message:
-
-⚠️ High Traffic Detected
-125,340 packets in the last minute — possible DDoS attack.
+* * * * * /path/to/dump.sh | python /path/to/webhook.py
+When traffic exceeds your threshold, you’ll receive an instant alert via your webhook channel.
 
 🧭 How It Works
 lua
@@ -103,55 +92,49 @@ Copy code
 | (collects   |       | (checks &      |       |  Slack, Teams, etc.) |
 |  metrics)   |       |  sends alerts) |       +----------------------+
 +-------------+       +----------------+
-dump.sh collects traffic stats from logs, firewalls, or interfaces
+dump.sh gathers traffic/log metrics
 
-webhook.py parses the data and compares it against thresholds
+webhook.py evaluates thresholds
 
-If an anomaly is detected → an alert is sent immediately
+If exceeded → notification is sent
 
-🧪 Example Threshold Logic
-python
-Copy code
-if packet_count > THRESHOLD:
-    payload = {
-        "content": f"⚠️ High traffic detected: {packet_count} packets in the last minute."
-    }
-    requests.post(WEBHOOK_URL, json=payload)
 🌟 Roadmap
- Support for additional notification channels (SMS, Email, Telegram)
+ YAML/JSON config support
 
- YAML / JSON configuration file support
+ Multiple notification channels (SMS, Telegram, Email)
 
- Rolling average detection (to reduce false positives)
+ Smarter detection (rolling averages / anomaly detection)
 
- Dashboard or CLI output mode
-
- Docker container version
+ Optional dashboard view
 
 🤝 Contributing
-Contributions are welcome! Here’s how:
+Contributions are welcome!
 
 Fork the repository
 
-Create a new branch (feature/my-feature)
+Create a new branch (feature/your-feature)
 
 Commit your changes
 
-Push and open a Pull Request 🚀
+Open a Pull Request
+
+Ideas for contributions:
+
+Add new notification types
+
+Improve threshold detection logic
+
+Add tests or CI pipelines
 
 📜 License
 This project is licensed under the MIT License.
 
-sql
+kotlin
 Copy code
 MIT License
 
-Copyright (c) 2025
+Copyright (c) 2025 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-<div align="center">
-🔥 Built with Bash, Python, and 💡 simplicity in mind.
-
-</div> ```
+of this software and associated documentation files...
+<p align="center"> 🛡 Built for security-minded admins • Fast • Simple • Effective </p> ```
