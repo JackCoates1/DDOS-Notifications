@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="banner.svg" alt="DDOS-Notifications Banner" width="100%">
+  <img src="banner.png" alt="DDOS-Notifications Banner" width="100%">
 </p>
 
 <div align="center">
@@ -26,14 +26,13 @@ Perfect for sysadmins and security engineers who want quick alerts without compl
 
 ## 📁 Project Structure
 
+```
 DDOS-Notifications/
-├── dump.sh # Bash script to collect network/log data
-├── webhook.py # Python script to check & send alerts
-├── setup.txt # Optional setup notes
+├── dump.sh         # Bash script to collect network/log data
+├── webhook.py      # Python script to check & send alerts
+├── setup.txt       # Optional setup notes
 └── README.md
-
-yaml
-Copy code
+```
 
 ---
 
@@ -44,71 +43,89 @@ Set your **webhook URL** and optional **threshold** using environment variables:
 ```bash
 export WEBHOOK_URL="https://your-webhook-url"
 export PACKET_THRESHOLD=100000
-Inside webhook.py:
+```
 
-python
-Copy code
+Inside `webhook.py`:
+
+```python
 import os
 
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 THRESHOLD = int(os.getenv("PACKET_THRESHOLD", "50000"))
-🚀 Usage
-Manual Run
+```
 
-lua
-Copy code
+---
+
+## 🚀 Usage
+
+**Manual Run**
+
+```
 ./dump.sh > stats.log
 python webhook.py stats.log
-Continuous Monitoring (Cron Example)
+```
 
-pgsql
-Copy code
+**Continuous Monitoring (Cron Example)**
+
+```
 * * * * * /path/to/dump.sh | python /path/to/webhook.py
+```
+
 When traffic exceeds your threshold, you’ll receive an instant alert via your webhook channel.
 
-🧭 How It Works
-lua
-Copy code
+---
+
+## 🧭 How It Works
+
+```
 +-------------+       +----------------+       +----------------------+
 |  dump.sh    | --->  |  webhook.py    | --->  |  Webhook (Discord)   |
 | (collects   |       | (checks &      |       |  Slack, Teams, etc.) |
 |  metrics)   |       |  sends alerts) |       +----------------------+
 +-------------+       +----------------+
-🌟 Roadmap
- YAML/JSON config support
+```
 
- Multiple notification channels (SMS, Telegram, Email)
+---
 
- Smarter detection (rolling averages / anomaly detection)
+## 🌟 Roadmap
 
- Optional dashboard view
+- [ ] YAML/JSON config support  
+- [ ] Multiple notification channels (SMS, Telegram, Email)  
+- [ ] Smarter detection (rolling averages / anomaly detection)  
+- [ ] Optional dashboard view
 
-🤝 Contributing
+---
+
+## 🤝 Contributing
+
 Contributions are welcome!
 
-Fork the repository
-
-Create a new branch (feature/your-feature)
-
-Commit your changes
-
-Open a Pull Request
+1. **Fork** the repository  
+2. Create a new branch (`feature/your-feature`)  
+3. Commit your changes  
+4. Open a **Pull Request**
 
 Ideas for contributions:
+- Add new notification types
+- Improve threshold detection logic
+- Add tests or CI pipelines
 
-Add new notification types
+---
 
-Improve threshold detection logic
+## 📜 License
 
-Add tests or CI pipelines
-
-📜 License
-kotlin
-Copy code
+```
 MIT License
 
-Copyright (c) 2025 
+Copyright (c) 2025
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files...
-<p align="center"> 🛡 Built for security-minded admins • Fast • Simple • Effective </p> ```
+```
+
+---
+
+<p align="center">
+  🛡 Built for security-minded admins • Fast • Simple • Effective
+</p>
+
