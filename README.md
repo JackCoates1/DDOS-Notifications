@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="banner.png" alt="DDOS-Notifications Banner" width="100%">
+  <img src="banner.svg" alt="DDOS-Notifications Banner" width="100%">
 </p>
 
 <div align="center">
