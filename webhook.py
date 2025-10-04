@@ -1,4 +1,4 @@
-# Insecurity Network - Attack Logs
+# Network - Attack Logs
 from discord_webhook import DiscordWebhook, DiscordEmbed
 from datetime import datetime
 NOW = datetime.now()
@@ -14,4 +14,5 @@ embed.set_thumbnail(url='https://flaglane.com/download/french-flag/french-flag-m
 embed.set_footer(text='Automatic Packet Dump has been initiated!')
 webhook.add_embed(embed)
 response = webhook.execute()
+
 
