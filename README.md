@@ -54,12 +54,14 @@ WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 THRESHOLD = int(os.getenv("PACKET_THRESHOLD", "50000"))
 🚀 Usage
 Manual Run
-bash
+
+lua
 Copy code
 ./dump.sh > stats.log
 python webhook.py stats.log
 Continuous Monitoring (Cron Example)
-cron
+
+pgsql
 Copy code
 * * * * * /path/to/dump.sh | python /path/to/webhook.py
 When traffic exceeds your threshold, you’ll receive an instant alert via your webhook channel.
@@ -101,8 +103,6 @@ Improve threshold detection logic
 Add tests or CI pipelines
 
 📜 License
-This project is licensed under the MIT License.
-
 kotlin
 Copy code
 MIT License
