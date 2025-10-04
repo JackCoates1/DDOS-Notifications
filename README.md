@@ -19,8 +19,8 @@
 
 ## 🧠 Overview
 
-**DDOS-Notifications** is a lightweight, fast tool to **detect suspicious traffic spikes** and send **real-time alerts** via webhooks (e.g. Discord, Slack, Teams).  
-Ideal for security admins, small networks, or anyone wanting a quick DDoS alerting setup — without heavy monitoring frameworks.
+**DDOS-Notifications** is a lightweight tool for **real-time detection of suspicious network spikes** and **instant alerting** through webhooks such as Discord, Slack, or Microsoft Teams.  
+Perfect for sysadmins and security engineers who want quick alerts without complex monitoring setups.
 
 ---
 
@@ -37,31 +37,11 @@ Copy code
 
 ---
 
-## 🧰 Requirements
+## ⚙️ Configuration
 
-- Python 3.x  
-- [`requests`](https://pypi.org/project/requests/) library  
-- A webhook URL (Discord, Slack, etc.)  
-- Bash / shell environment (Linux, macOS)
-
----
-
-## 🛠️ Installation (Quick)
+Set your **webhook URL** and optional **threshold** using environment variables:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/shexty/DDOS-Notifications.git
-cd DDOS-Notifications
-
-# 2. Install Python dependency
-pip install requests
-✅ That’s it — no extra config files or frameworks.
-
-⚙️ Configuration
-Set your webhook URL and optional threshold using environment variables:
-
-bash
-Copy code
 export WEBHOOK_URL="https://your-webhook-url"
 export PACKET_THRESHOLD=100000
 Inside webhook.py:
@@ -92,12 +72,6 @@ Copy code
 | (collects   |       | (checks &      |       |  Slack, Teams, etc.) |
 |  metrics)   |       |  sends alerts) |       +----------------------+
 +-------------+       +----------------+
-dump.sh gathers traffic/log metrics
-
-webhook.py evaluates thresholds
-
-If exceeded → notification is sent
-
 🌟 Roadmap
  YAML/JSON config support
 
