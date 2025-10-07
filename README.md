@@ -37,6 +37,8 @@ DDOS-Notifications/
 ---
 
 ## ⚙️ Configuration
+![Discord Webhook Alert](discord_webhook.jpg)
+*Screenshot: Discord Webhook Alert*
 
 Set your **webhook URL** and optional **threshold** using environment variables:
 
