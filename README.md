@@ -19,7 +19,7 @@
 
 ## 🧠 Overview
 
-**DDOS-Notifications** is a lightweight tool for **real-time detection of suspicious network spikes** and **instant alerting** through webhooks such as Discord, Slack, or Microsoft Teams.  
+**DDOS-Notifications** is a lightweight tool for **real-time detection of suspicious network spikes** and **instant alerting** through webhooks such as Discord.  
 Perfect for sysadmins and security engineers who want quick alerts without complex monitoring setups.
 
 ---
@@ -83,8 +83,8 @@ When traffic exceeds your threshold, you’ll receive an instant alert via your 
 ```
 +-------------+       +----------------+       +----------------------+
 |  dump.sh    | --->  |  webhook.py    | --->  |  Webhook (Discord)   |
-| (collects   |       | (checks &      |       |  Slack, Teams, etc.) |
-|  metrics)   |       |  sends alerts) |       +----------------------+
+| (collects   |       | (checks &      |       +----------------------+
+|  metrics)   |       |  sends alerts) |       
 +-------------+       +----------------+
 ```
 
