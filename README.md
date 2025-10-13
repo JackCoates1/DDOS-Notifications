@@ -36,45 +36,151 @@ DDOS-Notifications/
 
 ---
 
-## ⚙️ Configuration
-![Discord Webhook Alert](discord_webhook.png)
+## 📦 Installation & Setup Guide
 
-*Screenshot: Discord Webhook Alert*
+Follow these steps to set up DDOS-Notifications on your server:
 
-Set your **webhook URL** and optional **threshold** using environment variables:
+### Step 1: Install Dependencies
+
+First, update your system and install the required packages: `tcpdump`, `python3`, `screen`, and `python3-pip`.
 
 ```bash
-export WEBHOOK_URL="https://your-webhook-url"
-export PACKET_THRESHOLD=100000
+sudo apt update -y && sudo apt upgrade -y
+sudo apt install python3-pip screen tcpdump -y
+pip3 install discord-webhook pyyaml
 ```
 
-Inside `webhook.py`:
+### Step 2: Clone the Repository
 
-```python
-import os
+Clone this repository to your server and navigate into the directory:
 
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-THRESHOLD = int(os.getenv("PACKET_THRESHOLD", "50000"))
+```bash
+git clone https://github.com/JackCoates1/DDOS-Notifications.git
+cd DDOS-Notifications
+```
+
+### Step 3: Configure the Tool
+
+The tool uses a YAML configuration file for settings. Copy the example configuration and edit it with your own values:
+
+```bash
+cp config.yaml.example config.yaml
+nano config.yaml  # or use vim, vi, etc.
+```
+
+**Edit the following values in `config.yaml`:**
+
+- `webhook.url`: Your Discord webhook URL
+- `webhook.username`: The bot username that will appear in Discord
+- `embed.fields.protection_provider`: Your hosting/protection provider
+- `embed.fields.location`: Your server location
+- `embed.fields.ip_address`: Your server's IP address
+- `embed.thumbnail_url`: URL to a flag or custom image for the alert
+
+**Example configuration:**
+```yaml
+webhook:
+  url: "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+  username: "DDoS Alert Bot"
+
+embed:
+  title: "DDoS Alert (PPS Threshold Reached)"
+  url: "https://cybersniff.net"
+  description: "Your server has been attacked!"
+  color: 3447003
+  
+  footer_text: "Automatic Packet Dump has been initiated!"
+  
+  fields:
+    protection_provider: "OVH"
+    location: "France"
+    ip_address: "151.80.217.215"
+  
+  thumbnail_url: "https://flaglane.com/download/french-flag/french-flag-medium.jpg"
+```
+
+### Step 4: Set Script Permissions
+
+Make the `dump.sh` script executable:
+
+```bash
+chmod +x dump.sh
+```
+
+### Step 5: Troubleshooting the Network Interface
+
+If you encounter an error like `arithmetic expression: expecting primary`, this means the script cannot find your network interface. 
+
+**Find your network interface:**
+
+```bash
+ip addr
+```
+
+Look for your primary network interface (commonly `eth0`, `ens3`, `venet0`, or similar). Then update the `interface` variable in `dump.sh`:
+
+```bash
+nano dump.sh
+```
+
+Change line 7 from:
+```bash
+interface=venet0
+```
+
+To your actual interface name, for example:
+```bash
+interface=eth0
+```
+
+### Step 6: Running in the Background with `screen`
+
+To keep the monitoring script running even after you disconnect from SSH, use `screen`.
+
+**Create a new screen session:**
+
+```bash
+screen -S ddos-monitor
+```
+
+**Run the script inside the screen session:**
+
+```bash
+sudo ./dump.sh
+```
+
+You should see output like:
+```
+0 packets/s
+15 packets/s
+23 packets/s
+```
+
+**Detach from the screen session:**
+
+Press `Ctrl+A`, then press `D` to detach. The script will continue running in the background.
+
+**Re-attach to the session later:**
+
+```bash
+screen -r ddos-monitor
+```
+
+**List all screen sessions:**
+
+```bash
+screen -ls
 ```
 
 ---
 
-## 🚀 Usage
+## 🔔 Alert Example
 
-**Manual Run**
+When a DDoS attack is detected (traffic exceeds 750 packets/second), you'll receive an alert in Discord:
 
-```
-./dump.sh > stats.log
-python webhook.py stats.log
-```
+![Discord Webhook Alert](discord_webhook.png)
 
-**Continuous Monitoring (Cron Example)**
-
-```
-* * * * * /path/to/dump.sh | python /path/to/webhook.py
-```
-
-When traffic exceeds your threshold, you’ll receive an instant alert via your webhook channel.
+*Screenshot: Discord Webhook Alert showing attack details*
 
 ---
 
