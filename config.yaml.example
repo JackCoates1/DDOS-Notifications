@@ -1,0 +1,27 @@
+# Configuration file for DDOS-Notifications
+# Copy this file to config.yaml and fill in your details
+
+webhook:
+  url: "YOUR_DISCORD_WEBHOOK_URL_HERE"
+  username: "DDoS Alert Bot"
+
+embed:
+  title: "DDoS Alert (PPS Threshold Reached)"
+  url: "https://cybersniff.net"
+  description: "Your server has been attacked!"
+  color: 3447003  # Decimal color code (blue)
+  
+  # Footer text for the embed
+  footer_text: "Automatic Packet Dump has been initiated!"
+  
+  # Embed fields
+  fields:
+    protection_provider: "OVH"
+    location: "France"
+    ip_address: "151.80.217.215"
+  
+  # Thumbnail URL (flag or custom image)
+  thumbnail_url: "https://flaglane.com/download/french-flag/french-flag-medium.jpg"
+  
+  # Dump directory path
+  dump_directory: "/home/ubuntu/dumps/"
