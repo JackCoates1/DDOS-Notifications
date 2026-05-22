@@ -4,12 +4,12 @@
 
 <div align="center">
 
-# 🚨 DDOS-Notifications  
+# DDOS-Notifications
 **Real-Time DDoS Detection & Notifications**
 
-![Stars](https://img.shields.io/github/stars/shexty/DDOS-Notifications?style=flat&color=yellow)
-![Forks](https://img.shields.io/github/forks/shexty/DDOS-Notifications?style=flat&color=blue)
-![Issues](https://img.shields.io/github/issues/shexty/DDOS-Notifications?style=flat&color=orange)
+![Stars](https://img.shields.io/github/stars/JackCoates1/DDOS-Notifications?style=flat&color=yellow)
+![Forks](https://img.shields.io/github/forks/JackCoates1/DDOS-Notifications?style=flat&color=blue)
+![Issues](https://img.shields.io/github/issues/JackCoates1/DDOS-Notifications?style=flat&color=orange)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/made%20with-Python-blue?logo=python)
 
@@ -17,224 +17,82 @@
 
 ---
 
-## 🧠 Overview
+## Overview
 
-**DDOS-Notifications** is a lightweight tool for **real-time detection of suspicious network spikes** and **instant alerting** through webhooks such as Discord.  
-Perfect for sysadmins and security engineers who want quick alerts without complex monitoring setups.
+Lightweight Python tool that monitors network traffic and sends instant alerts to Discord when a potential DDoS is detected. Built it because I wanted something simple that just works without a massive monitoring stack.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 DDOS-Notifications/
-├── dump.sh         # Bash script to collect network/log data
-├── webhook.py      # Python script to check & send alerts
-├── setup.txt       # Optional setup notes
+├── dump.sh             # Collects network/packet data
+├── webhook.py          # Checks thresholds, fires Discord alert
+├── config.yaml.example # Copy this and fill in your values
 └── README.md
 ```
 
 ---
 
-## 📦 Installation & Setup Guide
+## Setup
 
-Follow these steps to set up DDOS-Notifications on your server:
-
-### Step 1: Install Dependencies
-
-First, update your system and install the required packages: `tcpdump`, `python3`, `screen`, and `python3-pip`.
+**1. Install dependencies**
 
 ```bash
-sudo apt update -y && sudo apt upgrade -y
-sudo apt install python3-pip screen tcpdump -y
+sudo apt update && sudo apt install python3-pip screen tcpdump -y
 pip3 install discord-webhook pyyaml
 ```
 
-### Step 2: Clone the Repository
-
-Clone this repository to your server and navigate into the directory:
+**2. Clone the repo**
 
 ```bash
 git clone https://github.com/JackCoates1/DDOS-Notifications.git
 cd DDOS-Notifications
 ```
 
-### Step 3: Configure the Tool
-
-The tool uses a YAML configuration file for settings. Copy the example configuration and edit it with your own values:
+**3. Configure**
 
 ```bash
 cp config.yaml.example config.yaml
-nano config.yaml  # or use vim, vi, etc.
+nano config.yaml
 ```
 
-**Edit the following values in `config.yaml`:**
+Set your Discord webhook URL, server IP, and location.
 
-- `webhook.url`: Your Discord webhook URL
-- `webhook.username`: The bot username that will appear in Discord
-- `embed.fields.protection_provider`: Your hosting/protection provider
-- `embed.fields.location`: Your server location
-- `embed.fields.ip_address`: Your server's IP address
-- `embed.thumbnail_url`: URL to a flag or custom image for the alert
-
-**Example configuration:**
-```yaml
-webhook:
-  url: "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
-  username: "DDoS Alert Bot"
-
-embed:
-  title: "DDoS Alert (PPS Threshold Reached)"
-  url: "https://cybersniff.net"
-  description: "Your server has been attacked!"
-  color: 3447003
-  
-  footer_text: "Automatic Packet Dump has been initiated!"
-  
-  fields:
-    protection_provider: "OVH"
-    location: "France"
-    ip_address: "151.80.217.215"
-  
-  thumbnail_url: "https://flaglane.com/download/french-flag/french-flag-medium.jpg"
-```
-
-### Step 4: Set Script Permissions
-
-Make the `dump.sh` script executable:
-
-```bash
-chmod +x dump.sh
-```
-
-### Step 5: Troubleshooting the Network Interface
-
-If you encounter an error like `arithmetic expression: expecting primary`, this means the script cannot find your network interface. 
-
-**Find your network interface:**
+**4. Check your network interface**
 
 ```bash
 ip addr
 ```
 
-Look for your primary network interface (commonly `eth0`, `ens3`, `venet0`, or similar). Then update the `interface` variable in `dump.sh`:
+Update the `interface` variable in `dump.sh` if needed — common values are `eth0`, `ens3`, `venet0`.
+
+**5. Run in background with screen**
 
 ```bash
-nano dump.sh
-```
-
-Change line 7 from:
-```bash
-interface=venet0
-```
-
-To your actual interface name, for example:
-```bash
-interface=eth0
-```
-
-### Step 6: Running in the Background with `screen`
-
-To keep the monitoring script running even after you disconnect from SSH, use `screen`.
-
-**Create a new screen session:**
-
-```bash
+chmod +x dump.sh
 screen -S ddos-monitor
-```
-
-**Run the script inside the screen session:**
-
-```bash
 sudo ./dump.sh
-```
-
-You should see output like:
-```
-0 packets/s
-15 packets/s
-23 packets/s
-```
-
-**Detach from the screen session:**
-
-Press `Ctrl+A`, then press `D` to detach. The script will continue running in the background.
-
-**Re-attach to the session later:**
-
-```bash
-screen -r ddos-monitor
-```
-
-**List all screen sessions:**
-
-```bash
-screen -ls
+# Ctrl+A, D to detach — screen -r ddos-monitor to re-attach
 ```
 
 ---
 
-## 🔔 Alert Example
+## How It Works
 
-When a DDoS attack is detected (traffic exceeds 750 packets/second), you'll receive an alert in Discord:
+`dump.sh` monitors packet rate → `webhook.py` checks against threshold → Discord alert fires if exceeded.
 
 ![Discord Webhook Alert](discord_webhook.png)
 
-*Screenshot: Discord Webhook Alert showing attack details*
+---
+
+## Roadmap
+
+- [ ] Telegram + email support
+- [ ] Rolling average detection to reduce false positives
+- [ ] Optional web dashboard
 
 ---
 
-## 🧭 How It Works
-
-```
-+-------------+       +----------------+       +----------------------+
-|  dump.sh    | --->  |  webhook.py    | --->  |  Webhook (Discord)   |
-| (collects   |       | (checks &      |       +----------------------+
-|  metrics)   |       |  sends alerts) |       
-+-------------+       +----------------+
-```
-
----
-
-## 🌟 Roadmap
-
-- [ ] YAML/JSON config support  
-- [ ] Multiple notification channels (SMS, Telegram, Email)  
-- [ ] Smarter detection (rolling averages / anomaly detection)  
-- [ ] Optional dashboard view
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. **Fork** the repository  
-2. Create a new branch (`feature/your-feature`)  
-3. Commit your changes  
-4. Open a **Pull Request**
-
-Ideas for contributions:
-- Add new notification types
-- Improve threshold detection logic
-- Add tests or CI pipelines
-
----
-
-## 📜 License
-
-```
 MIT License
-
-Copyright (c) 2025
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
-```
-
----
-
-<p align="center">
-  🛡 Built for security-minded admins • Fast • Simple • Effective
-</p>
-
