@@ -1,17 +1,9 @@
-<p align="center">
-  <img src="Banner.svg" alt="DDOS-Notifications Banner" width="100%">
-</p>
 
 <div align="center">
 
 # DDOS-Notifications
-**Real-Time DDoS Detection & Notifications**
+**Packet-rate monitoring with Discord alerts**
 
-![Stars](https://img.shields.io/github/stars/JackCoates1/DDOS-Notifications?style=flat&color=yellow)
-![Forks](https://img.shields.io/github/forks/JackCoates1/DDOS-Notifications?style=flat&color=blue)
-![Issues](https://img.shields.io/github/issues/JackCoates1/DDOS-Notifications?style=flat&color=orange)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Python](https://img.shields.io/badge/made%20with-Python-blue?logo=python)
 
 </div>
 
@@ -19,7 +11,7 @@
 
 ## Overview
 
-Lightweight Python tool that monitors network traffic and sends instant alerts to Discord when a potential DDoS is detected. Built it because I wanted something simple that just works without a massive monitoring stack.
+This script monitors network traffic and sends a Discord alert when traffic exceeds a threshold. I built it because I wanted an alternative to a large monitoring stack.
 
 ---
 
@@ -28,7 +20,7 @@ Lightweight Python tool that monitors network traffic and sends instant alerts t
 ```
 DDOS-Notifications/
 ├── dump.sh             # Collects network/packet data
-├── webhook.py          # Checks thresholds, fires Discord alert
+├── webhook.py          # Sends a Discord alert
 ├── config.yaml.example # Copy this and fill in your values
 └── README.md
 ```
@@ -66,7 +58,7 @@ Set your Discord webhook URL, server IP, and location.
 ip addr
 ```
 
-Update the `interface` variable in `dump.sh` if needed — common values are `eth0`, `ens3`, `venet0`.
+Update the `interface` variable in `dump.sh` if needed. Common values are `eth0`, `ens3` and `venet0`.
 
 **5. Run in background with screen**
 
@@ -74,14 +66,14 @@ Update the `interface` variable in `dump.sh` if needed — common values are `et
 chmod +x dump.sh
 screen -S ddos-monitor
 sudo ./dump.sh
-# Ctrl+A, D to detach — screen -r ddos-monitor to re-attach
+# Ctrl+A, D to detach. Use screen -r ddos-monitor to re-attach.
 ```
 
 ---
 
 ## How It Works
 
-`dump.sh` monitors packet rate → `webhook.py` checks against threshold → Discord alert fires if exceeded.
+`dump.sh` monitors packet rate and checks it against a threshold. When the threshold is exceeded, it calls `webhook.py` to send a Discord alert.
 
 ![Discord Webhook Alert](discord_webhook.png)
 
